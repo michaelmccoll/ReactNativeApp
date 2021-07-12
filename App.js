@@ -4,6 +4,9 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
 import uploadToAnonymousFilesAsync from 'anonymous-files';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { render } from 'react-dom';
 // To  add delay to splash screen
 // import * as SplashScreen from 'expo-splash-screen';
 
@@ -11,6 +14,7 @@ import uploadToAnonymousFilesAsync from 'anonymous-files';
 // setTimeout(SplashScreen.hideAsync, 3000);
 
 export default function App() {
+ 
   const [selectedImage, setSelectedImage] = React.useState(null);
 
   let openImagePickerAsync = async () => {
@@ -34,6 +38,11 @@ export default function App() {
     }
   };
 
+  // Button to remove selected image
+  let removeSelectedImage = async () => {
+    setSelectedImage({ selectedImage: null })
+  }
+
   let openShareDialogAsync = async () => {
     if (!(await Sharing.isAvailableAsync())) {
       alert(`The image is available for sharing at: ${selectedImage.remoteUri}`);
@@ -51,20 +60,31 @@ export default function App() {
         <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
           <Text style={styles.buttonText}>Share this photo</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={removeSelectedImage} style={styles.button}>
+          <Text style={styles.buttonText}>Remove this photo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
+          <Text style={styles.buttonText}>Select Another Picture</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: "https://i.imgur.com/TkIrScD.png" }} style={styles.logo}/>
-      <Text style={styles.instructions}>To share a photo from your phone with a friend, just press the button below!</Text>
-      <TouchableOpacity
-        onPress={openImagePickerAsync} style={styles.button}>
-        <Text style={styles.buttonText}>Pick a photo</Text>
-      </TouchableOpacity>
+      <NavigationContainer>
+        <Image source={{ uri: "https://i.imgur.com/TkIrScD.png" }} style={styles.logo}/>
+        <Text style={styles.instructions}>To share a photo from your phone with a friend, just press the button below!</Text>
+        <TouchableOpacity
+          onPress={openImagePickerAsync} style={styles.button}>
+          <Text style={styles.buttonText}>Pick a photo</Text>
+        </TouchableOpacity>
+      </NavigationContainer>
     </View>
   );
+
+
+
 }
 
 const styles = StyleSheet.create({
@@ -86,8 +106,9 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "blue",
-    padding: 20,
+    padding: 15,
     borderRadius: 5,
+    margin: 5,
   },
   buttonText: {
     fontSize: 20,
