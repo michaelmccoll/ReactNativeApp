@@ -10,6 +10,9 @@ import * as React from 'react';
 import { Button, View, Text, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MainStackNavigator } from "./navigation/StackNavigator";
+import BottomTabNavigator from "./navigation/TabNavigator";
 
 // To  add delay to splash screen
 // import * as SplashScreen from 'expo-splash-screen';
@@ -27,20 +30,7 @@ function LogoTitle() {
 }
 
 function HomeScreen({navigation,route}) {
-
   React.useEffect(() => {if (route.params?.post){}}, [route.params?.post]);
-
-  // CREATES a counter on header
-  // const [count, setCount] = React.useState(0);
-  // React.useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerRight: () => (
-  //       <Button onPress={() => setCount(c => c + 1)} title="Update count" />
-  //     ),
-  //   });
-  // }, [navigation]);
-
-  // return <Text>Count: {count}</Text>;
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -94,32 +84,70 @@ function DetailsScreen({route, navigation}) {
   );
 }
 
-const Stack = createStackNavigator();
-
-function App() {
+function StatsScreen({navigation,route}){
   return (
-    <NavigationContainer>      
-      <Stack.Navigator screenOptions={{
-        headerStyle: {backgroundColor: '#f41e29',},
-        headerTintColor: '#fff',
-        headerTitleStyle: {fontWeight: 'bold',},
-        }}
-      >
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Stats Page...</Text>
+    </View>
+  );
+}
+
+function RaterScreen({navigation,route}){
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Rater Page...</Text>
+      <Text>Rater Page...</Text>
+      <Text>Rater Page...</Text>
+      <Text>Rater Page...</Text>
+    </View>
+  );
+}
+
+function MatchesScreen({navigation,route}){
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Matches Page...</Text>
+    </View>
+  );
+}
+
+function ProfileScreen({navigation,route}){
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Profile Page...</Text>
+    </View>
+  );
+}
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+
+function StackScreen() {
+  return (
+    <Stack.Navigator>
       <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={{
           headerTitle: props => <LogoTitle {...props} />,
           headerRight: () => (
-            <Button onPress={() => alert('This is a button!')} title="Info" color="#fff"/>
+            <Button
+              onPress={() => alert('This is a button!')}
+              title="Info"
+              color="#fff"
+            />
           ),
         }}
-        />
-        {/* <Stack.Screen name="Profile" component={ProfileScreen} options={({ route }) => ({ title: route.params.name })}/> */}
-        <Stack.Screen name="CreatePost" component={CreatePostScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        
-      </Stack.Navigator>
+      />
+    </Stack.Navigator>
+  );
+}
+
+function App() {
+  return (
+    <NavigationContainer>      
+      <BottomTabNavigator/>
     </NavigationContainer>
   );
 }
