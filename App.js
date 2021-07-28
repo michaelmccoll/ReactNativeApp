@@ -1,8 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, Platform, StyleSheet, TouchableOpacity } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import * as Sharing from 'expo-sharing';
-import uploadToAnonymousFilesAsync from 'anonymous-files';
+import { Image, StyleSheet } from 'react-native';
+
 import 'react-native-gesture-handler';
 import { render } from 'react-dom';
 
@@ -24,7 +22,7 @@ function LogoTitle() {
   return (
     <Image
       style={{ width: 40, height: 40 }}
-      source={require('/Users/michaelmccoll/projects/expo/my-app/assets/favicon.png')}
+      source={require('./assets/PlayerRaterLogo.png')}
     />
   );
 }
@@ -45,27 +43,6 @@ function HomeScreen({navigation,route}) {
   );
 }
 
-function CreatePostScreen({ navigation, route }) {
-  const [postText, setPostText] = React.useState('');
-
-  return (
-    <>
-      <TextInput
-        multiline placeholder="What's on your mind?"
-        style={{ height: 200, padding: 10, backgroundColor: 'white' }} value={postText}
-        onChangeText={setPostText}
-      />
-      <Button
-        title="Done"
-        onPress={() => {navigation.navigate({
-            name: 'Home',
-            params: { post: postText },
-            merge: true,});
-          }}
-      />
-    </>
-  );
-}
 
 
 function DetailsScreen({route, navigation}) {
@@ -88,33 +65,6 @@ function StatsScreen({navigation,route}){
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Stats Page...</Text>
-    </View>
-  );
-}
-
-function RaterScreen({navigation,route}){
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Rater Page...</Text>
-      <Text>Rater Page...</Text>
-      <Text>Rater Page...</Text>
-      <Text>Rater Page...</Text>
-    </View>
-  );
-}
-
-function MatchesScreen({navigation,route}){
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Matches Page...</Text>
-    </View>
-  );
-}
-
-function ProfileScreen({navigation,route}){
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Profile Page...</Text>
     </View>
   );
 }
@@ -153,80 +103,6 @@ function App() {
 }
 
 export default App;
-
-
-// *** IMAGE UPLOAD APP ***
-// export default function App() {
- 
-//   const [selectedImage, setSelectedImage] = React.useState(null);
-
-//   let openImagePickerAsync = async () => {
-//     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-//     if (permissionResult.granted === false) {
-//       alert("Permission to access camera roll is required!");
-//       return;
-//     }
-
-//     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    
-//     if (pickerResult.cancelled === true) {
-//       return;
-//     }
-//     if (Platform.OS === 'web') {
-//       let remoteUri = await uploadToAnonymousFilesAsync(pickerResult.uri);
-//       setSelectedImage({ localUri: pickerResult.uri, remoteUri });
-//     } else {
-//       setSelectedImage({ localUri: pickerResult.uri, remoteUri: null });
-//     }
-//   };
-
-//   // Button to remove selected image
-//   let removeSelectedImage = async () => {
-//     setSelectedImage({ selectedImage: null })
-//   }
-
-//   let openShareDialogAsync = async () => {
-//     if (!(await Sharing.isAvailableAsync())) {
-//       alert(`The image is available for sharing at: ${selectedImage.remoteUri}`);
-//       return;
-//     }
-
-//     await Sharing.shareAsync(selectedImage.localUri);
-//   };
-
-//   if (selectedImage !== null) {
-//     return (
-//       <View style={styles.container}>
-//         <Image
-//           source={{ uri: selectedImage.localUri }} style={styles.thumbnail}/>
-//         <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
-//           <Text style={styles.buttonText}>Share this photo</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity onPress={removeSelectedImage} style={styles.button}>
-//           <Text style={styles.buttonText}>Remove this photo</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
-//           <Text style={styles.buttonText}>Select Another Picture</Text>
-//         </TouchableOpacity>
-//       </View>
-//     );
-//   }
-
-//   return (
-//     <View style={styles.container}>
-//       <NavigationContainer>
-//         <Image source={{ uri: "https://i.imgur.com/TkIrScD.png" }} style={styles.logo}/>
-//         <Text style={styles.instructions}>To share a photo from your phone with a friend, just press the button below!</Text>
-//         <TouchableOpacity
-//           onPress={openImagePickerAsync} style={styles.button}>
-//           <Text style={styles.buttonText}>Pick a photo</Text>
-//         </TouchableOpacity>
-//       </NavigationContainer>
-//     </View>
-//   );
-// }
-// *** IMAGE UPLOAD APP ***
 
 
 const styles = StyleSheet.create({

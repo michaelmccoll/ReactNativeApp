@@ -1,11 +1,24 @@
 import React from "react";
-import { View, Button, Text, StyleSheet } from "react-native";
+import { View, Button, Text, TextInput, StyleSheet } from "react-native";
 
-const Rater = () => {
+const Rater = ({ navigation, route }) => {
+  const [postText, setPostText] = React.useState('');
   return (
-    <View style={styles.center}>
-      <Text>This is the Rater screen</Text>
-    </View>
+    <>
+      <TextInput
+        multiline placeholder="What's on your mind?"
+        style={{ height: 100, padding: 10, margin: 20, backgroundColor: 'white' }} value={postText}
+        onChangeText={setPostText}
+      />
+      <Button
+        title="Done"
+        onPress={() => {navigation.navigate({
+            name: 'Home',
+            params: { post: postText },
+            merge: true,});
+          }}
+      />
+    </>
   );
 };
 
