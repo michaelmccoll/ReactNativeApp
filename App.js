@@ -5,6 +5,7 @@ import 'react-native-gesture-handler';
 import { render } from 'react-dom';
 
 import * as React from 'react';
+import {useState,useEffect} from 'react';
 import { Button, View, Text, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -95,6 +96,71 @@ function StackScreen() {
 }
 
 function App() {
+
+  const [teamSelect, setTeamSelect] = React.useState(null)
+  const [playerSelect, setPlayerSelect] = React.useState(0)
+  const [teams, setTeams] = React.useState([])
+  const [players, setPlayers] = React.useState([])
+  const [latestMatch, setLatestMatch] = React.useState(null)
+  const [loaded, setLoaded] = React.useState(false)
+
+  const getTeams = () => {
+    fetch(`http://player-rater.herokuapp.com/teams`)
+    .then(res => res.json())
+    .then(data => {
+      setTeams(data)
+      // setTeamSelect(data[0])
+    })
+    .then(() => setLoaded(true))
+}
+
+  const getPlayers = () => {
+      fetch(`http://player-rater.herokuapp.com/players`)
+      .then(res => res.json())
+      .then(data =>{
+        setPlayers(data)
+        // setPlayerSelect(data[0])
+      } )
+      .then(() => setLoaded(true))
+  }
+
+  useEffect(()=>{
+    getTeams();
+    getPlayers();
+  },[])
+
+  useEffect(() => {
+    if (teamSelect) {
+      getLatestMatch()
+    }
+  }, [teamSelect, teams])
+
+  const getTeam = (selectedTeam) => {
+    for (const team of teams ) {
+      if (team.id == selectedTeam) {
+        setTeamSelect(team)
+      }
+    }
+  }
+
+  // Fetches the team selected's last match
+  const getLatestMatch = () => {
+    if (teamSelect) {
+      const match = teamSelect.matches.slice(-1)[0]
+      console.log(match)
+      setLatestMatch(match)
+    }
+  }
+
+  // Fetches the player selected
+  const getPlayer = (selectedPlayer) => {
+    for (const player of players ) {
+      if (player.id == selectedPlayer) {
+        setPlayerSelect(player)
+      }
+    }
+  }
+  
   return (
     <NavigationContainer>      
       <BottomTabNavigator/>

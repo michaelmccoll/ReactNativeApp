@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   thumbnail: {
-    width: 300,
-    height: 300,
+    width: 550,
+    height: 550,
     resizeMode: 'contain',
   },
 });

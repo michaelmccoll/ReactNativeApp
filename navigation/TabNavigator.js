@@ -1,7 +1,6 @@
 import React from "react";
+import { Image } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import { MainStackNavigator } from "./StackNavigator";
 
 import Stats from "../screens/Stats";
@@ -16,32 +15,32 @@ const BottomTabNavigator = () => {
     <Tab.Navigator>
       <Tab.Screen name="Home" component={MainStackNavigator} options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+          tabBarIcon: () => (
+            <Image source={require('../assets/icons/team.png')} style={{width:30, height: 30}} />
           ),
         }}/>
       <Tab.Screen name="Stats" component={Stats} options={{
           tabBarLabel: 'Stats',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="chart-timeline-variant" color={color} size={size} />
+          tabBarIcon: () => (
+            <Image source={require('../assets/icons/stats.png')} style={{width:30, height: 30}} />
           ),
         }}/>
       <Tab.Screen name="Rater" component={Rater} options={{
           tabBarLabel: 'Rater',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="star" color={color} size={size} />
+          tabBarIcon: () => (
+            <Image source={require('../assets/icons/starFull.png')} style={{width:60, height: 60}} />
           ),
         }}/>
       <Tab.Screen name="Matches" component={Matches} options={{
           tabBarLabel: 'Matches',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="format-list-bulleted-square" color={color} size={size} />
+          tabBarIcon: () => (
+            <Image source={require('../assets/icons/matches.png')} style={{width:30, height: 30}} />
           ),
         }}/>
       <Tab.Screen name="Profile" component={Profile} options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+          tabBarIcon: () => (
+            <Image source={require('../assets/icons/profile.png')} style={{width:30, height: 30}} />
           ),
         }}/>
     </Tab.Navigator>

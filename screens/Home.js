@@ -1,12 +1,20 @@
 import React from "react";
-import { View, Button, Text, StyleSheet } from "react-native";
+import { View, Button, Text,StyleSheet } from "react-native";
+import {Picker} from '@react-native-picker/picker';
 
 const Home = () => {
-  return (
-    <View style={styles.center}>
-      <Text>This is the home screen</Text>
-    </View>
-  );
+  const [selectedTeam, setSelectedTeam] = React.useState('');
+    return (
+      <Picker
+        selectedTeam={selectedTeam}
+        onValueChange={(itemValue, itemIndex) =>
+          setSelectedTeam(itemValue)
+        }>
+        <Text>Select Team</Text>
+        <Picker.Item label="Hibs" value="hibs" />
+        <Picker.Item label="Hearts" value="hearts" />
+      </Picker>
+    );
 };
 
 const styles = StyleSheet.create({
